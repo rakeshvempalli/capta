@@ -38,7 +38,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 //------------------------get methods
 app.get('/', (req, res) => {
-  res.sendFile('/public/index.html');
+	const filepath = StaticPath.join(__dirname,'index.html');
+	res.sendFile(filepath);
 });
 
 app.get('/dashboard', (req, res) => {
