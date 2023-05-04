@@ -38,7 +38,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 //------------------------get methods
 app.get('/', (req, res) => {
-  res.send("hello");
+	res.render(StaticPath.join('/dash/index'));
 });
 
 // app.get('/dashboard', (req, res) => {
