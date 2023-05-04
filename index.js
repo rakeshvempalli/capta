@@ -162,8 +162,8 @@
 //   console.log(`Example app listening on port ${port}`);
 // })
 
-import { express } from "express";
-const app = express()
+import express  from "express";
+const app = express();
 app.use('/',(req,res)=>{
 	res.json({message:"server"})
 })
