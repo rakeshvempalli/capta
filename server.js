@@ -1,17 +1,20 @@
-import express from "express";
-import bodyParser from "body-parser";
-import StaticPath from "path";
-import mysql from "mysql";
-const __dirname = StaticPath.dirname(new URL(import.meta.url).pathname);
-const app = express();
+const express = require('express');
+const upload = require('express-fileupload')
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const {check, validationResult} = require('express-validator')
 const urlencodedParser = bodyParser.urlencoded({extended:false})
+const path = require('path');
+const mysql = require('mysql');
+const multer = require('multer');
+const app = express();
 var dateObj =  new Date();
 var month = dateObj.getUTCMonth() + 1; //months from 1-12
 var day = dateObj.getUTCDate();
 var year = dateObj.getUTCFullYear();
 var date = day+"/"+month+"/"+year;
 var router = express.Router()
-import session from "express-session";
+
 //database 
 const port = 3333
 const connection = mysql.createConnection({
@@ -22,11 +25,11 @@ const connection = mysql.createConnection({
 });
 
 //--------------------------set methods
- app.set('view engine', 'ejs');
-app.set('views',StaticPath.join(__dirname+'/views'));
+app.set('view engine', 'ejs');
+
 //--------------------------use methods
-// app.use(upload())
-app.use(express.static(StaticPath.join(__dirname+'/public')));
+app.use(upload())
+app.use(express.static(path.join(__dirname+'/public')));
 
 app.use(session({
 	secret: 'uiadadq313cda241df2r01849193',
@@ -38,13 +41,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 //------------------------get methods
 app.get('/', (req, res) => {
-	const filepath = StaticPath.join(__dirname,'/views/index.html');
-	res.sendFile(filepath);
+  res.render(path.join(__dirname+'/index'));
 });
 
 app.get('/dashboard', (req, res) => {
-	const filepath =  StaticPath.join(__dirname+'/views/dash.html');
-	res.sendFile(filepath);
+	res.render(path.join(__dirname+'/dash/index'));
   });
 
 app.get('/manage', (req, res) => {
@@ -52,7 +53,7 @@ app.get('/manage', (req, res) => {
 	connection.query('SELECT COUNT(id) AS idcount from users Where role=1',(err2,total)=>
 			{
 				if (err2){throw err2}else{
-					res.render(StaticPath.join(__dirname+'/dash/manage'),{count:total});
+					res.render(path.join(__dirname+'/dash/manage'),{count:total});
 			
 				}
 			});
@@ -63,20 +64,19 @@ app.get('/manage/manage-users', (req, res) => {
 			throw err
 		} else {
 			
-				res.render(StaticPath.join(__dirname+'/manage/manage-user'),{data:rows});
+				res.render(path.join(__dirname+'/manage/manage-user'),{data:rows});
 			}
 	});
   });
 
 app.get('/manage/add-user', (req, res) => {
-	res.sendFile(StaticPath.join(__dirname+'/views/manage/add-user.html'));
+	res.render(path.join(__dirname+'/manage/add-user'));
   });
 //------------------------post methods
 //login 
-app.post('/',(req, res) =>{
+app.post('/login',(req, res) =>{
 	let email = req.body.email;
 	let password = req.body.password;
-	console.log(email,password);
 	 if (email && password) {
 		connection.query('SELECT * FROM users WHERE email = ? AND pass = ?', [email, password], (error, results, fields)=>{
 
@@ -86,12 +86,12 @@ app.post('/',(req, res) =>{
 				req.session.email = email;
 				res.redirect('/dashboard');
 			} else {
-				res.sendStatus('Invalid Email or Password');
+				res.render(path.join(__dirname+'/'),{message:'Invalid Email or Password'});
 			}			
 			res.end();
 		});
 	} else {
-		res.sendStatus('Please check all the input');
+		res.render(path.join(__dirname+'/'),{message:'Please check all the input'});
 		res.end();
 	}
 	//res.json(req.body);
@@ -133,11 +133,11 @@ app.post('/manage/add-user',(req, res) =>{
 			if (error) throw error;
 				req.session.loggedin = true;
 				req.session.email = email;
-				res.render(StaticPath.join(__dirname+'/manage/add-user'),{message:'User Addedd Sucessfully'});
+				res.render(path.join(__dirname+'/manage/add-user'),{message:'User Addedd Sucessfully'});
 				res.end();
 		});
 	} else {
-		res.render(StaticPath.join(__dirname+'/manage/add-user'),{message:'Please Enter Valid Details'});
+		res.render(path.join(__dirname+'/manage/add-user'),{message:'Please Enter Valid Details'});
 		res.end();
 	//	const token = localStorage.getItem('token');
 	}
@@ -161,12 +161,3 @@ app.post('/manage/add-user',(req, res) =>{
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 })
-
-// import express  from "express";
-// const app = express();
-// app.use('/',(req,res)=>{
-// 	res.json({message:"server"})
-// })
-// app.listen(3333,()=>{
-// 	console.log("port running")
-// })
