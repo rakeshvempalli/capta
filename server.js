@@ -18,10 +18,10 @@ var router = express.Router()
 //database 
 const port = 3333
 const connection = mysql.createConnection({
-	host     : 'localhost',
-	user     : 'root',
-	password : '',
-	database : 'capta'
+	host     : 'sql984.main-hosting.eu',
+	user     : 'u734900206_capta',
+	password : 'Leantech@8861',
+	database : 'u734900206_capta'
 });
 
 //--------------------------set methods
