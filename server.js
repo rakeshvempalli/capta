@@ -69,12 +69,12 @@ app.get('/manage/manage-users', (req, res) => {
 	});
   });
   app.get('/manage/manage-institution', (req, res) => {
-	connection.query('SELECT * FROM users',(err, rows)=> {
+	connection.query('SELECT * FROM institution',(err, rows)=> {
 		if (err) {
 			throw err
 		} else {
 			
-				res.render(path.join(__dirname+'/manage/manage-institution'),{data:""});
+				res.render(path.join(__dirname+'/manage/manage-institution'),{data:rows});
 			}
 	});
   });
@@ -164,6 +164,37 @@ app.post('/manage/add-user',(req, res) =>{
 
 	// });
 	//res.json(req.body);
+});
+
+///manage/add-institution
+app.post('/manage/add-institution',(req, res) =>{
+	console.log(req.body.length)
+	if ( req.body['cname'] && req.body['tname']) {
+		connection.query('Insert Into institution (cname,eamcet,pan,gst,email,phone,addr,city,pincode,country,tname,temail,tphone) values(?,?,?,?,?,?,?,?,?,?,?,?,?)', 
+		[req.body['cname'],
+		req.body['eamcet'],
+		req.body['gst'],
+		req.body['pan'],
+		req.body['email'],
+		req.body['phone'],
+		req.body['addr'],
+		req.body['city'],
+		req.body['country'],
+		req.body['pincode'],
+		req.body['tname'],
+		req.body['tphone'],
+		req.body['tphone']], (error, results, fields)=>{
+			if (error) throw error;
+		
+				res.render(path.join(__dirname+'/manage/add-institution'),{message:'Addedd Sucessfully'});
+				res.end();
+		});
+	} else {
+		res.render(path.join(__dirname+'/manage/add-institution'),{message:'Please Enter Valid Details'});
+		res.end();
+	//	const token = localStorage.getItem('token');
+	}
+
 });
 
 //----------------------helper functions 

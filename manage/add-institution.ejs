@@ -21,6 +21,7 @@
   <link href="/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+  <!-- <link id="pagestyle" href="/css/custom.css" rel="stylesheet" /> -->
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -40,42 +41,47 @@
                 <p class="text-uppercase text-sm">Institution Information</p>
                 <%if(typeof message !='undefined'){%>
                     <div class="alert alert-custom" role="alert">
-                      <span><%= message %></span>
+                      <span style="color:rgb(42, 170, 234)"><%= message %></span>
                     </div>
                     <%}%>
-                <form action="/manage/add-user" method="Post" name="adduser">
+                <form action="/manage/add-institution" method="Post" name="addInstitution">
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="example-text-input" class="form-control-label">College Name</label>
-                      <input class="form-control" type="text" name="cname"  onfocus="focused(this)" onfocusout="defocused(this)" >
+                      <label for="example-text-input" class="form-control-label">Full College Name</label>
+                      <input class="form-control" type="text" name="cname"  onfocus="focused(this)" onfocusout="defocused(this)" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">EAMCET CODE</label>
+                      <input class="form-control" type="text" name="eamcet"  onfocus="focused(this)" onfocusout="defocused(this)" >
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">GST Number</label>
+                      <input class="form-control" type="text" name="gst"  onfocus="focused(this)" onfocusout="defocused(this)" >
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">PAN Number</label>
+                      <input class="form-control" type="text" name="pan"  onfocus="focused(this)" onfocusout="defocused(this)" >
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">Email address</label>
-                      <input class="form-control" type="email" name="email"  onfocus="focused(this)" onfocusout="defocused(this)" >
+                      <input class="form-control" type="email" name="email"  onfocus="focused(this)" onfocusout="defocused(this)" required>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">Phone Number</label>
-                      <input class="form-control" type="text" name="phone"  onfocus="focused(this)" onfocusout="defocused(this)" >
+                      <input class="form-control" type="text" name="phone"  onfocus="focused(this)" onfocusout="defocused(this)" required>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="example-text-input" class="form-control-label">Contact Person Name</label>
-                      <input class="form-control" type="text" name="cpname"  onfocus="focused(this)" onfocusout="defocused(this)" >
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="example-text-input" class="form-control-label">Contact Person Phone Number</label>
-                      <input class="form-control" type="text" name="cphone"  onfocus="focused(this)" onfocusout="defocused(this)" >
-                    </div>
-                  </div>
-                
                 </div>
                 <hr class="horizontal dark">
                 <p class="text-uppercase text-sm">Additional Information</p>
@@ -83,13 +89,13 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">Address</label>
-                      <input class="form-control" type="text" name="addr"  onfocus="focused(this)" onfocusout="defocused(this)" >
+                      <input class="form-control" type="text" name="addr"  onfocus="focused(this)" onfocusout="defocused(this)" required>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">City</label>
-                      <input class="form-control" type="text" name="city" onfocus="focused(this)" onfocusout="defocused(this)" >
+                      <input class="form-control" type="text" name="city" onfocus="focused(this)" onfocusout="defocused(this)" required>
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -101,32 +107,36 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">Postal code</label>
-                      <input class="form-control" type="text" name="pincode" onfocus="focused(this)" onfocusout="defocused(this)" >
+                      <input class="form-control" type="text" name="pincode" onfocus="focused(this)" onfocusout="defocused(this)" required>
                     </div>
                   </div>
                 </div>
-
-               
-            
                 <hr class="horizontal dark">
-                <p class="text-uppercase text-sm">Password</p>
+                <p class="text-uppercase text-sm">Clients Information</p>
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Enter Password</label>
-                          <input class="form-control" type="password" name="password"  onfocus="focused(this)" onfocusout="defocused(this)" >
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Confirm Password</label>
-                          <input class="form-control" type="password" name="cpassword"  onfocus="focused(this)" onfocusout="defocused(this)" >
-                        </div>
-                      </div>
-           
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">Chairman / Director / TPO Name</label>
+                      <input class="form-control" type="text" name="tname"  onfocus="focused(this)" onfocusout="defocused(this)" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">Email address</label>
+                      <input class="form-control" type="email" name="temail"  onfocus="focused(this)" onfocusout="defocused(this)" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">Phone Number</label>
+                      <input class="form-control" type="text" name="tphone"  onfocus="focused(this)" onfocusout="defocused(this)" required>
+                    </div>
+                  </div>
+                
                 </div>
-
                 <button class="btn btn-primary btn-sm ms-auto" type="submit" name="submit" >Submit </button>
+            </div>
+               
                 </form>
               </div>
             </div>
@@ -134,23 +144,7 @@
          
       </div>
   
-      <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                Developed by
-                <a  class="font-weight-bold" target="_blank">Leantech Labs</a>
-                
-              </div>
-            </div>
-            
-          </div>
-        </div>
-      </footer>
+        <%- include('../includes/footer'); %>
     </div>
   </main>
   

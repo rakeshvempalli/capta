@@ -9,3 +9,11 @@
     background-color: #fff3cd;
     border-color: #ffeeba;
 }
+
+.edge-nav{
+   margin-left:-10px;
+   margin-top: 8px;
+}
+.nav-box{
+    margin-top:-60px;
+}
