@@ -1,0 +1,274 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <title>
+    Coign Analytics Portal For Training And Administartion
+</title>
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+</head>
+
+<body class="g-sidenav-show   bg-gray-100">
+  <div class="min-height-300 bg-primary position-absolute w-100"></div>
+  <%- include('../includes/sidebar.ejs'); %>
+  <main class="main-content position-relative border-radius-lg ">
+    <!-- Navbar -->
+    <%- include('../includes/navbar.ejs'); %>
+    <!-- End Navbar -->
+    <div class="container-fluid py-4">
+        <div class="row">
+          <div class="col-md-10">
+            <div class="card">
+              
+              <div class="card-body">
+
+                <p class="text-uppercase text-sm">Institution Information</p>
+                <%if(typeof message !='undefined'){%>
+                    <div class="alert alert-custom" role="alert">
+                      <span><%= message %></span>
+                    </div>
+                    <%}%>
+                <form action="/manage/add-user" method="Post" name="adduser">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">College Name</label>
+                      <input class="form-control" type="text" name="cname"  onfocus="focused(this)" onfocusout="defocused(this)" >
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">Email address</label>
+                      <input class="form-control" type="email" name="email"  onfocus="focused(this)" onfocusout="defocused(this)" >
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">Phone Number</label>
+                      <input class="form-control" type="text" name="phone"  onfocus="focused(this)" onfocusout="defocused(this)" >
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">Contact Person Name</label>
+                      <input class="form-control" type="text" name="cpname"  onfocus="focused(this)" onfocusout="defocused(this)" >
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">Contact Person Phone Number</label>
+                      <input class="form-control" type="text" name="cphone"  onfocus="focused(this)" onfocusout="defocused(this)" >
+                    </div>
+                  </div>
+                
+                </div>
+                <hr class="horizontal dark">
+                <p class="text-uppercase text-sm">Additional Information</p>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">Address</label>
+                      <input class="form-control" type="text" name="addr"  onfocus="focused(this)" onfocusout="defocused(this)" >
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">City</label>
+                      <input class="form-control" type="text" name="city" onfocus="focused(this)" onfocusout="defocused(this)" >
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">Country</label>
+                      <input class="form-control" type="text" name="country" value="India" onfocus="focused(this)" onfocusout="defocused(this)" >
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">Postal code</label>
+                      <input class="form-control" type="text" name="pincode" onfocus="focused(this)" onfocusout="defocused(this)" >
+                    </div>
+                  </div>
+                </div>
+
+               
+            
+                <hr class="horizontal dark">
+                <p class="text-uppercase text-sm">Password</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Enter Password</label>
+                          <input class="form-control" type="password" name="password"  onfocus="focused(this)" onfocusout="defocused(this)" >
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Confirm Password</label>
+                          <input class="form-control" type="password" name="cpassword"  onfocus="focused(this)" onfocusout="defocused(this)" >
+                        </div>
+                      </div>
+           
+                </div>
+
+                <button class="btn btn-primary btn-sm ms-auto" type="submit" name="submit" >Submit </button>
+                </form>
+              </div>
+            </div>
+          </div>
+         
+      </div>
+  
+      <footer class="footer pt-3  ">
+        <div class="container-fluid">
+          <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6 mb-lg-0 mb-4">
+              <div class="copyright text-center text-sm text-muted text-lg-start">
+                © <script>
+                  document.write(new Date().getFullYear())
+                </script>,
+                Developed by
+                <a  class="font-weight-bold" target="_blank">Leantech Labs</a>
+                
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+  </main>
+  
+  <!--   Core JS Files   -->
+  <script src="/js/core/popper.min.js"></script>
+  <script src="/js/core/bootstrap.min.js"></script>
+  <script src="/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="/js/plugins/chartjs.min.js"></script>
+  <script>
+    function checkTrainer()
+    {
+        var newFeild = document.getElementById('newFeild')
+        var valueIn = document.getElementById('role').value;
+        if(valueIn=="2")
+        {
+            newFeild.style.display="block";
+        }else{
+            newFeild.style.display="none";
+        }
+
+    }
+
+    var ctx1 = document.getElementById("chart-line").getContext("2d");
+
+    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
+    gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
+    gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
+    new Chart(ctx1, {
+      type: "line",
+      data: {
+        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [{
+          label: "Mobile apps",
+          tension: 0.4,
+          borderWidth: 0,
+          pointRadius: 0,
+          borderColor: "#5e72e4",
+          backgroundColor: gradientStroke1,
+          borderWidth: 3,
+          fill: true,
+          data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+          maxBarThickness: 6
+
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          }
+        },
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
+        scales: {
+          y: {
+            grid: {
+              drawBorder: false,
+              display: true,
+              drawOnChartArea: true,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              padding: 10,
+              color: '#fbfbfb',
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+          x: {
+            grid: {
+              drawBorder: false,
+              display: false,
+              drawOnChartArea: false,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              color: '#ccc',
+              padding: 20,
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+        },
+      },
+    });
+  </script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="/js/argon-dashboard.min.js?v=2.0.4"></script>
+</body>
+
+</html>

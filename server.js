@@ -68,9 +68,21 @@ app.get('/manage/manage-users', (req, res) => {
 			}
 	});
   });
-
+  app.get('/manage/manage-institution', (req, res) => {
+	connection.query('SELECT * FROM users',(err, rows)=> {
+		if (err) {
+			throw err
+		} else {
+			
+				res.render(path.join(__dirname+'/manage/manage-institution'),{data:""});
+			}
+	});
+  });
 app.get('/manage/add-user', (req, res) => {
 	res.render(path.join(__dirname+'/manage/add-user'));
+  });
+app.get('/manage/add-institution', (req, res) => {
+	res.render(path.join(__dirname+'/manage/add-institution'));
   });
 //------------------------post methods
 //login 
