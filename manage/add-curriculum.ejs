@@ -38,60 +38,43 @@
               
               <div class="card-body">
 
-                <p class="text-uppercase text-sm">Module Information</p>
+                <p class="text-uppercase text-sm">Curriculum Information</p>
                 <%if(typeof message !='undefined'){%>
                     <div class="alert alert-custom" role="alert">
                       <span style="color:rgb(42, 170, 234)"><%= message %></span>
                     </div>
                     <%}%>
-                <form action="/manage/add-institution" method="Post" name="addInstitution">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="example-text-input" class="form-control-label">Select College</label>
-                      <select class="form-control" id="type" name="type">
-                        <option value="" selected>Select</option>
-                        <%if(data.length){ for(var i=0;i<data.length;i++){    %>
-                          
-                        <option value=<%= data[i].id %>><%= data[i].cname%></option>
-                        <%} }%>
-                      </select>
-                    </div>
-                  </div>
+                <form action="/manage/add-curriculum" method="Post" name="addInstitution">
+              
+                 
                   <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Enter Module Name</label>
-                            <input class="form-control" type="text" name="mname"  onfocus="focused(this)" onfocusout="defocused(this)" required>
+                            <label for="example-text-input" class="form-control-label">Enter Curriculum Name</label>
+                            <input class="form-control" type="text" name="cname"  onfocus="focused(this)" onfocusout="defocused(this)" required>
                           </div>
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Total Hours</label>
+                            <input class="form-control" type="text" name="hours"  onfocus="focused(this)" onfocusout="defocused(this)" required>
+                          </div>
+                          <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Total Days</label>
+                            <input class="form-control" type="text" name="days"  onfocus="focused(this)" onfocusout="defocused(this)" required>
+                          </div>
+                          
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Module Start Date</label>
-                            <input class="form-control" type="date" name="sdate"  onfocus="focused(this)" onfocusout="defocused(this)" required>
+                            <label for="example-text-input" class="form-control-label">Upload Excel Curriculum </label>
+                            <p style="font-size:small">Download Sample Excel Format <a href="#">Download Here</a></p>
+                            <input class="form-control" type="file" name="excel"  onfocus="focused(this)" onfocusout="defocused(this)" required>
                           </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Module End Date</label>
-                            <input class="form-control" type="date" name="edate"  onfocus="focused(this)" onfocusout="defocused(this)" required>
-                          </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Select Curicullum</label>
-                            <select class="form-control" id="type" name="type">
-                              <option value="" selected>Select</option>
-                              <%if(data.length){ for(var i=0;i<data.length;i++){    %>
-                                
-                              <option value=<%= data[i].id %>><%= data[i].cname%></option>
-                              <%} }%>
-                            </select>
-                          </div>
-                    </div>
+                   
+                   
                   </div>
                
-                </div>
+             
                 <button class="btn btn-primary btn-sm ms-auto" type="submit" name="submit" >Submit </button>
             </div>
  
@@ -114,7 +97,18 @@
   <script src="/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="/js/plugins/chartjs.min.js"></script>
   <script>
+    function checkTrainer()
+    {
+        var newFeild = document.getElementById('newFeild')
+        var valueIn = document.getElementById('role').value;
+        if(valueIn=="2")
+        {
+            newFeild.style.display="block";
+        }else{
+            newFeild.style.display="none";
+        }
 
+    }
 
     var ctx1 = document.getElementById("chart-line").getContext("2d");
 

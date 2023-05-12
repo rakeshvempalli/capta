@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <title>
+    Coign Analytics Portal For Training And Administartion
+  </title>
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+  <style>
+    label {
+      font-size: 15px;
+    }
+  </style>
+  <!-- <link id="pagestyle" href="/css/custom.css" rel="stylesheet" /> -->
+</head>
+
+<body class="g-sidenav-show   bg-gray-100">
+  <div class="min-height-300 bg-primary position-absolute w-100"></div>
+  <%- include('../includes/sidebar.ejs'); %>
+    <main class="main-content position-relative border-radius-lg ">
+      <!-- Navbar -->
+      <%- include('../includes/navbar.ejs'); %>
+        <!-- End Navbar -->
+        <div class="container-fluid py-4">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="card">
+
+                <div class="card-body">
+
+                  <p class="text-uppercase text-sm">Module Information</p>
+                  <%if(typeof message !='undefined' ){%>
+                    <div class="alert alert-custom" role="alert">
+                      <span style="color:rgb(42, 170, 234)">
+                        <%= message %>
+                      </span>
+                    </div>
+                    <%}%>
+                      <form action="/manage/module-confirmation-sheet" method="Post" name="addInstitution">
+
+
+                        <div class="row">
+                          <div>
+                            <hr class="horizontal dark">
+                            <p class="text-uppercase text-sm">College Details</p>
+                            <div class="form-group">
+                              <label for="example-text-input" class="form-control-label">Select College</label>
+                              <select class="form-control" id="collegeName" name="collgeName">
+                                <option value="" selected>Select</option>
+                                <%if(data.length){ for(var i=0;i<data.length;i++){ %>
+
+                                  <option value=<%=data[i].id %>><%= data[i].cname%>
+                                  </option>
+                                  <%} }%>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="pocName" class="form-control-label">College POC Name</label>
+                              <input class="form-control" type="text" name="pocName" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="designation" class="form-control-label">Designation</label>
+                              <input class="form-control" type="text" name="designation" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="pocEmail" class="form-control-label">College POC Email ID</label>
+                              <input class="form-control" type="email" name="pocEmail" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="pocContact" class="form-control-label">College POC Contact Number</label>
+                              <input class="form-control" type="tel" name="pocContact" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="address" class="form-control-label">Address / City</label>
+                              <input class="form-control" type="text" name="address" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="suitableTransport" class="form-control-label">Suitable Transport</label>
+                              <input class="form-control" type="text" name="suitableTransport" check>
+                            </div>
+                            <hr class="horizontal dark">
+                            <p class="text-uppercase text-sm">Amenities check for the Training</p>
+
+                            <div class="form-group">
+                              <label for="food" class="form-control-label">Food</label>
+                              <input class="form-control" type="text" name="food" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="accommodation" class="form-control-label">Accommodation</label>
+                              <input class="form-control" type="text" name="accommodation" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="localTransport" class="form-control-label">Local Transport</label>
+                              <input class="form-control" type="text" name="localTransport" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="majorTransport" class="form-control-label">Major Transport</label>
+                              <input class="form-control" type="text" name="majorTransport" check>
+                            </div>
+                            <hr class="horizontal dark">
+                            <p class="text-uppercase text-sm"> College Training & Placement History</p>
+
+
+                            <div class="form-group">
+                              <label for="previousVendor" class="form-control-label">Previous Training Vendor</label>
+                              <input class="form-control" type="text" name="previousVendor" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="feedback" class="form-control-label">Feedback of the previous training</label>
+                              <textarea class="form-control" name="feedback" rows="3" check></textarea>
+                            </div>
+                            <div class="form-group">
+                              <label for="interest" class="form-control-label">Interest / Goals of the college
+                                management</label>
+                              <textarea class="form-control" name="interest" rows="3" check></textarea>
+                            </div>
+                            <div class="form-group">
+                              <label for="day1Company" class="form-control-label">Day 1 Company</label>
+                              <input class="form-control" type="text" name="day1Company" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="otherCompanies" class="form-control-label">Other Companies List</label>
+                              <textarea class="form-control" name="otherCompanies" rows="3" check></textarea>
+                            </div>
+
+                            <hr class="horizontal dark">
+                            <p class="text-uppercase text-sm">Module Description</p>
+                            <div class="form-group">
+                              <label for="moduleName" class="form-control-label">Name of the Module</label>
+                              <input class="form-control" type="text" name="moduleName" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="hoursPerBatch" class="form-control-label">No of Hours per batch</label>
+                              <input class="form-control" type="text" name="hoursPerBatch" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="modulesCovered" class="form-control-label">Modules to be covered</label>
+                              <select class="form-control" name="modulesCovered">
+                                <option value="">Select</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="executionType" class="form-control-label">Execution Type</label>
+                              <select class="form-control" name="executionType">
+                                <option value="">Select</option>
+                                <option value="online">Online</option>
+                                <option value="offline">Offline</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="startDate" class="form-control-label">Start Date</label>
+                              <input class="form-control" type="date" name="startDate" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="endDate" class="form-control-label">End Date</label>
+                              <input class="form-control" type="date" name="endDate" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="numStudents" class="form-control-label">Number of Students</label>
+                              <input class="form-control" type="text" name="numStudents" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="numBatches" class="form-control-label">Number of Batches</label>
+                              <input class="form-control" type="text" name="numBatches" check>
+                            </div>
+                            <div class="form-group">
+
+                              <label for="preferredTimings" class="form-control-label">Preferred Timings</label>
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <label for="preferredTimings" class="form-control-label">From</label>
+                                  <input class="form-control" type="time" name="startpreferredTimings" check>
+                                </div>
+                                <div class="col-md-6">
+                                  <label for="preferredTimings" class="form-control-label">To</label>
+                                  <input class="form-control" type="time" name="endpreferredTimings" check>
+                                </div>
+                              </div>
+                            </div>
+                            <hr class="horizontal dark">
+                            <p class="text-uppercase text-sm">COIGN POC</p>
+
+                            <div class="form-group">
+                              <label for="marketingPerson" class="form-control-label">Marketing Person</label>
+                              <input class="form-control" type="text" name="marketingPerson" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="marketingContact" class="form-control-label">Contact Number</label>
+                              <input class="form-control" type="tel" name="marketingContact" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="marketingEmail" class="form-control-label">Email ID</label>
+                              <input class="form-control" type="email" name="marketingEmail" check>
+                            </div>
+                            <hr class="horizontal dark">
+                            <p class="text-uppercase text-sm">COIGN POC</p>
+                            <div class="form-group">
+                              <label for="trainingManager" class="form-control-label">Training Manager / POC</label>
+                              <input class="form-control" type="text" name="trainingManager" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="trainingContact" class="form-control-label">Contact Number</label>
+                              <input class="form-control" type="tel" name="trainingContact" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="trainingEmail" class="form-control-label">Email ID</label>
+                              <input class="form-control" type="email" name="trainingEmail" check>
+                            </div>
+                            <hr class="horizontal dark">
+                            <p class="text-uppercase text-sm">Financial Details</p>
+                            <div class="form-group">
+                              <label for="unitBasis" class="form-control-label">Unit Basis</label>
+                              <select class="form-control" name="unitBasis">
+                                <option value="">Select</option>
+                                <option value="1">Per Day/ Per Trainer</option>
+                                <option value="2">Per Student</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="unitCost" class="form-control-label">Unit Cost</label>
+                              <input class="form-control" type="text" name="unitCost" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="numUnits" class="form-control-label">Number of Units</label>
+                              <input class="form-control" type="text" name="numUnits" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="totalCost" class="form-control-label">Total Price</label>
+                              <input class="form-control" type="text" name="totalCost" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="gst" class="form-control-label">GST</label>
+                              <input class="form-control" type="text" name="gst" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="gst" class="form-control-label">Gross Income</label>
+                              <input class="form-control" type="text" name="grossIncome" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="gst" class="form-control-label">TDS</label>
+                              <input class="form-control" type="text" name="tds" check>
+                            </div>
+                            <div class="form-group">
+                              <label for="gst" class="form-control-label">Amount to Coign Account</label>
+                              <input class="form-control" type="text" name="camount" check>
+                            </div>
+                            <hr class="horizontal dark">
+                            <p class="text-uppercase text-sm">INSTACK Exams</p>
+                            <div class="form-group">
+                              <label for="instackExams" class="form-control-label">INSTACK Exams</label>
+                              <select class="form-control" id="instackExams" name="instackExams"
+                                onchange="checkInstacks()" check>
+                                <option value="">Select</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                              </select>
+                            </div>
+                            <div class="form-group" id="instackMonths" style="display: none;">
+                              <label for="example-text-input" class="form-control-label">Enter Total Months</label>
+                              <input class="form-control" type="text" name="instackMonths" check>
+                            </div>
+                            <hr class="horizontal dark">
+                            <p class="text-uppercase text-sm">Income and Express Sheet</p>
+
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="income" class="form-control-label">Income</label>
+                                <input class="form-control" type="text" name="income" check>
+                              </div>
+                              <div class="form-group">
+                                <label for="expenses" class="form-control-label">Expenses</label>
+                                <input class="form-control" type="text" name="expenses" check>
+                              </div>
+                              <div class="form-group">
+                                <label for="totalTrainingDays" class="form-control-label">Total Number of Days of Training</label>
+                                <input class="form-control" type="text" name="totalTrainingDays" check>
+                              </div>
+                              <div class="form-group">
+                                <label for="perDayPerTrainer" class="form-control-label">Per Day Per Trainer</label>
+                                <input class="form-control" type="text" name="perDayPerTrainer" check>
+                              </div>
+                              <div class="form-group">
+                                <label for="totalContractValueBatch" class="form-control-label">Total Contract Value per Batch</label>
+                                <input class="form-control" type="text" name="totalContractValueBatch" check>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="totalTrainingHours" class="form-control-label">Total Number of Training Hours</label>
+                                <input class="form-control" type="text" name="totalTrainingHours" check>
+                              </div>
+                              <div class="form-group">
+                                <label for="companySpecificHours" class="form-control-label">Company Specific Training Hours</label>
+                                <input class="form-control" type="text" name="companySpecificHours" check>
+                              </div>
+                              <div class="form-group">
+                                <label for="totalHours" class="form-control-label">Total Hours</label>
+                                <input class="form-control" type="text" name="totalHours" check>
+                              </div>
+                              <div class="form-group">
+                                <label for="perHourPerBatch" class="form-control-label">Per Hour Per Batch</label>
+                                <input class="form-control" type="text" name="perHourPerBatch" check>
+                              </div>
+                              <div class="form-group">
+                                <label for="perDayPerBatch" class="form-control-label">Per Day Per Batch</label>
+                                <input class="form-control" type="text" name="perDayPerBatch" check>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="totalStudents" class="form-control-label">Total Number of Students</label>
+                                <input class="form-control" type="text" name="totalStudents" check>
+                              </div>
+                              </div>
+                              <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="totalBatches" class="form-control-label">Total Number of Batches</label>
+                                <input class="form-control" type="text" name="totalBatches" check>
+                              </div>
+                              </div>
+                              <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="totalTrainingDays" class="form-control-label">Total Number of Training Days</label>
+                                <input class="form-control" type="text" name="totalTrainingDays" check>
+                              </div>
+                              </div>
+                              <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="totalContractValueCOIGN" class="form-control-label">Total Contract Value for COIGN</label>
+                                <input class="form-control" type="text" name="totalContractValueCOIGN" check>
+                              </div>
+                              </div>
+                              <hr class="horizontal dark">
+                              <p class="text-uppercase text-sm"> Expenses</p>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="numberOfTrainers" class="form-control-label">Number of Trainers</label>
+                                  <input class="form-control" type="text" name="numberOfTrainers" check>
+                                </div>
+                                <div class="form-group">
+                                  <label for="perHeadPerDay" class="form-control-label">Per head per day</label>
+                                  <input class="form-control" type="text" name="perHeadPerDay" check>
+                                </div>
+                                <div class="form-group">
+                                  <label for="numberOfDaysPerTrainer" class="form-control-label">Number of days per each trainer</label>
+                                  <input class="form-control" type="text" name="numberOfDaysPerTrainer" check>
+                                </div>
+                                <div class="form-group">
+                                  <label for="portalCostPerStudent" class="form-control-label">Portal Cost Per Student</label>
+                                  <input class="form-control" type="text" name="portalCostPerStudent" check>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="numberOfStudents" class="form-control-label">Number of Students</label>
+                                  <input class="form-control" type="text" name="numberOfStudents" check>
+                                </div>
+                                <div class="form-group">
+                                  <label for="travelling" class="form-control-label">Travelling</label>
+                                  <input class="form-control" type="text" name="travelling" check>
+                                </div>
+                                <div class="form-group">
+                                  <label for="commission" class="form-control-label">Commission</label>
+                                  <input class="form-control" type="text" name="commission" check>
+                                </div>
+                                <div class="form-group">
+                                  <label for="indirectExpenses" class="form-control-label">Indirect Expenses (15%)</label>
+                                  <input class="form-control" type="text" name="indirectExpenses" check>
+                                </div>
+                                <div class="form-group">
+                                  <label for="totalExpenses" class="form-control-label">Total Expenses</label>
+                                  <input class="form-control" type="text" name="totalExpenses" check>
+                                </div>
+                                <div class="form-group">
+                                  <label for="totalExpenses" class="form-control-label">Total Profit</label>
+                                  <input class="form-control" type="text" name="totalProfit" check>
+                                </div>
+                              </div>
+
+                            </div>
+
+                            
+                          
+
+
+
+                        </div>
+
+
+                        <button class="btn btn-primary btn-sm ms-auto" type="submit" name="submit">Submit </button>
+                </div>
+
+
+                </form>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <%- include('../includes/footer'); %>
+          </div>
+    </main>
+
+    <!--   Core JS Files   -->
+    <script src="/js/core/popper.min.js"></script>
+    <script src="/js/core/bootstrap.min.js"></script>
+    <script src="/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="/js/plugins/chartjs.min.js"></script>
+    <script>
+      function checkInstacks() {
+        var newFeild = document.getElementById('instackMonths')
+        var valueIn = document.getElementById('instackExams').value;
+        if (valueIn == "Yes") {
+          newFeild.style.display = "block";
+        } else {
+          newFeild.style.display = "none";
+        }
+
+      }
+
+      var ctx1 = document.getElementById("chart-line").getContext("2d");
+
+      var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
+
+      gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
+      gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
+      gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
+      new Chart(ctx1, {
+        type: "line",
+        data: {
+          labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          datasets: [{
+            label: "Mobile apps",
+            tension: 0.4,
+            borderWidth: 0,
+            pointRadius: 0,
+            borderColor: "#5e72e4",
+            backgroundColor: gradientStroke1,
+            borderWidth: 3,
+            fill: true,
+            data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+            maxBarThickness: 6
+
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false,
+            }
+          },
+          interaction: {
+            intersect: false,
+            mode: 'index',
+          },
+          scales: {
+            y: {
+              grid: {
+                drawBorder: false,
+                display: true,
+                drawOnChartArea: true,
+                drawTicks: false,
+                borderDash: [5, 5]
+              },
+              ticks: {
+                display: true,
+                padding: 10,
+                color: '#fbfbfb',
+                font: {
+                  size: 11,
+                  family: "Open Sans",
+                  style: 'normal',
+                  lineHeight: 2
+                },
+              }
+            },
+            x: {
+              grid: {
+                drawBorder: false,
+                display: false,
+                drawOnChartArea: false,
+                drawTicks: false,
+                borderDash: [5, 5]
+              },
+              ticks: {
+                display: true,
+                color: '#ccc',
+                padding: 20,
+                font: {
+                  size: 11,
+                  family: "Open Sans",
+                  style: 'normal',
+                  lineHeight: 2
+                },
+              }
+            },
+          },
+        },
+      });
+    </script>
+    <script>
+      var win = navigator.platform.indexOf('Win') > -1;
+      if (win && document.querySelector('#sidenav-scrollbar')) {
+        var options = {
+          damping: '0.5'
+        }
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+      }
+    </script>
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="/js/argon-dashboard.min.js?v=2.0.4"></script>
+</body>
+
+</html>

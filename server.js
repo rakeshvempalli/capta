@@ -1,12 +1,12 @@
 const express = require('express');
-const upload = require('express-fileupload')
+const fileUpload = require('express-fileupload');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const {check, validationResult} = require('express-validator')
 const urlencodedParser = bodyParser.urlencoded({extended:false})
 const path = require('path');
 const mysql = require('mysql');
-const multer = require('multer');
+const xlsx = require('xlsx');
 const app = express();
 var dateObj =  new Date();
 var month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -28,7 +28,7 @@ const connection = mysql.createConnection({
 app.set('view engine', 'ejs');
 
 //--------------------------use methods
-app.use(upload())
+
 app.use(express.static(path.join(__dirname+'/public')));
 
 app.use(session({
@@ -48,6 +48,30 @@ app.get('/dashboard', (req, res) => {
 	res.render(path.join(__dirname+'/dash/index'));
   });
 
+
+app.get('/manage/add-module', (req, res) => {
+	connection.query('SELECT * from institution',(err2,data)=>
+		{
+			if (err2){throw err2}else{
+				res.render(path.join(__dirname+'/manage/add-module'),{data:data});
+			}
+		});
+  });
+  app.get('/manage/add-curriculum', (req, res) => {
+	res.render(path.join(__dirname+'/manage/add-curriculum'));
+  });
+
+  app.get('/manage/module-confirmation-sheet', (req, res) => {
+	connection.query('SELECT * FROM institution',(err, rows)=> {
+		if (err) {
+			throw err
+		} else {
+			
+			res.render(path.join(__dirname+'/manage/module-confirmation-sheet'),{data:rows});
+			}
+	});
+	
+  });
 app.get('/manage', (req, res) => {
 	
 	connection.query('SELECT COUNT(id) AS idcount from users Where role=1',(err2,total)=>
@@ -131,6 +155,7 @@ app.post('/manage/add-user',(req, res) =>{
 	 var adhar = req.body.adhar 
 	 var resume = req.body.resume
 	 var photo = req.body.photo
+	 var salary = req.body.salary;
 	 var type=""
 	 if(req=='1'){
 		type="Manager"
@@ -140,8 +165,8 @@ app.post('/manage/add-user',(req, res) =>{
 	 var defaultpass= "123456"
 	 //validate and add to trainer 
 	 if ( name && email) {
-		connection.query('Insert Into users(name,email,phone,address,city,country,postcode,bname,bcode,ifsc,anumber,role,type,cdate,pass) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', 
-		[name,email, phone,addr,city,country,pincode,bname,bcode,ifsc,anumber,role,type,date,defaultpass], (error, results, fields)=>{
+		connection.query('Insert Into users(name,email,phone,address,city,country,postcode,bname,bcode,ifsc,anumber,role,type,cdate,pass,salary) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', 
+		[name,email, phone,addr,city,country,pincode,bname,bcode,ifsc,anumber,role,type,date,defaultpass,salary], (error, results, fields)=>{
 			if (error) throw error;
 				req.session.loggedin = true;
 				req.session.email = email;
@@ -197,8 +222,236 @@ app.post('/manage/add-institution',(req, res) =>{
 
 });
 
-//----------------------helper functions 
 
+app.post('/manage/add-curriculum',(req, res) =>{
+
+	
+	  const file = req.body.excel;
+	
+	  // Check if the uploaded file is an Excel file
+	//   const allowedFileTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'];
+	//   if (!allowedFileTypes.includes(file.mimetype)) {
+	// 	res.render(path.join(__dirname+'/manage/add-curriculum'),{message:'Only Excel Sheet Allowed'});
+	// 	res.end();
+	//   }
+	   // Move the file to the desired folder
+  const filePath = '/uploads/excel' + file.name;
+//   file.mv(filePath, (error) => {
+//     if (error) {
+//       console.error('Error uploading file:', error);
+//     //   return res.status(500).send('Error uploading file.');
+//     }
+
+    console.log('File uploaded successfully.');
+    // res.send('File uploaded successfully.');
+//   });
+
+
+	
+	//res.json(req.body);
+});
+//----------------------helper functions 
+app.post('/manage/module-confirmation-sheet', (req, res) => {
+	const data = req.body;
+	// Perform the MySQL insert operation
+
+const {
+  collgeName,
+  pocName,
+  designation,
+  pocEmail,
+  pocContact,
+  address,
+  suitableTransport,
+  food,
+  accommodation,
+  localTransport,
+  majorTransport,
+  previousVendor,
+  feedback,
+  interest,
+  day1Company,
+  otherCompanies,
+  moduleName,
+  hoursPerBatch,
+  modulesCovered,
+  executionType,
+  startDate,
+  endDate,
+  numStudents,
+  numBatches,
+  startpreferredTimings,
+  endpreferredTimings,
+  marketingPerson,
+  marketingContact,
+  marketingEmail,
+  trainingManager,
+  trainingContact,
+  trainingEmail,
+  unitBasis,
+  unitCost,
+  numUnits,
+  totalCost,
+  gst,
+  grossIncome,
+  tds,
+  camount,
+  instackExams,
+  instackMonths,
+  income,
+  expenses,
+  totalTrainingDays,
+  perDayPerTrainer,
+  totalContractValueBatch,
+  totalTrainingHours,
+  companySpecificHours,
+  totalHours,
+  perHourPerBatch,
+  perDayPerBatch,
+  totalStudents,
+  totalBatches,
+  totalContractValueCOIGN,
+  numberOfTrainers,
+  perHeadPerDay,
+  numberOfDaysPerTrainer,
+  portalCostPerStudent,
+  numberOfStudents,
+  travelling,
+  commission,
+  indirectExpenses,
+  totalExpenses,
+  totalProfit
+  } = req.body;
+
+const values = [collgeName,pocName,designation,pocEmail,pocContact,address,suitableTransport,food,accommodation,localTransport,
+	majorTransport,previousVendor,feedback,interest,day1Company,otherCompanies,moduleName,hoursPerBatch,modulesCovered,
+	executionType,
+	startDate,
+	endDate,
+	numStudents,
+	numBatches,
+	startpreferredTimings,
+	endpreferredTimings,
+	marketingPerson,
+	marketingContact,
+	marketingEmail,
+	trainingManager,
+	trainingContact,
+	trainingEmail,
+	unitBasis,
+	unitCost,
+	numUnits,
+	totalCost,
+	gst,
+	grossIncome,
+	tds,
+	camount,
+	instackExams,
+	instackMonths,
+	income,
+	expenses,
+	totalTrainingDays,
+	perDayPerTrainer,
+	totalContractValueBatch,
+	totalTrainingHours,
+	companySpecificHours,
+	totalHours,
+	perHourPerBatch,
+	perDayPerBatch,
+	totalStudents,
+	totalBatches,
+	totalContractValueCOIGN,
+	numberOfTrainers,
+	perHeadPerDay,
+	numberOfDaysPerTrainer,
+	portalCostPerStudent,
+	numberOfStudents,
+	travelling,
+	commission,
+	indirectExpenses,
+	totalExpenses,
+	totalProfit
+] 
+console.log(values);
+const query =`INSERT INTO module (
+    collegeName,
+    pocName,
+    designation,
+    pocEmail,
+    pocContact,
+    address,
+    suitableTransport,
+    food,
+    accommodation,
+    localTransport,
+    majorTransport,
+    previousVendor,
+    feedback,
+    interest,
+    day1Company,
+    otherCompanies,
+    moduleName,
+    hoursPerBatch,
+    modulesCovered,
+    executionType,
+    startDate,
+    endDate,
+    numStudents,
+    numBatches,
+    startpreferredTimings,
+    endpreferredTimings,
+    marketingPerson,
+    marketingContact,
+    marketingEmail,
+    trainingManager,
+    trainingContact,
+    trainingEmail,
+    unitBasis,
+    unitCost,
+    numUnits,
+    totalCost,
+    gst,
+    grossIncome,
+    tds,
+    camount,
+    instackExams,
+    instackMonths,
+    income,
+    expenses,
+    totalTrainingDays,
+    perDayPerTrainer,
+    totalContractValueBatch,
+    totalTrainingHours,
+    companySpecificHours,
+    totalHours,
+    perHourPerBatch,
+    perDayPerBatch,
+    totalStudents,
+    totalBatches,
+    totalContractValueCOIGN,
+    numberOfTrainers,
+    perHeadPerDay,
+    numberOfDaysPerTrainer,
+    portalCostPerStudent,
+    numberOfStudents,
+    travelling,
+    commission,
+    indirectExpenses,
+    totalExpenses,
+    totalProfit
+) VALUES (
+    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+)`
+
+  connection.query(query, values, (error, results) => {
+	if (error) {
+	  console.error('Error inserting data:', error);
+	  return;
+	}
+	console.log('Data inserted successfully!');
+  });
+});  
+  
 
 //end
 app.listen(port, () => {
