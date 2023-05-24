@@ -448,11 +448,30 @@ const query =`INSERT INTO module (
 	  console.error('Error inserting data:', error);
 	  return;
 	}
-	console.log('Data inserted successfully!');
+	res.render(path.join(__dirname+'/manage/module-confirmation-sheet'),{message:'Added Successfully'});
   });
 });  
+app.post('/trainer/day-work', (req, res) => {
+	// Retrieve the form data from the request body
+	const formData = req.body;
   
-
+	// Insert query
+	const query = 'INSERT INTO training SET ?';
+  
+	// Execute the query with the form data
+	connection.query(query, formData, (error, results, fields) => {
+	  if (error) {
+		console.error('Error occurred during insertion:', error);
+		res.render(path.join(__dirname+'/trainer/day-work'),{message:'Server Error '});
+	  } else {
+		res.render(path.join(__dirname+'/trainer/day-work'),{message:'Submitted Successfully'});
+	  }
+	});
+  });
+app.get('/trainer/day-work', (req, res) => {
+	res.render(path.join(__dirname+'/trainer/day-work'));
+	
+  });
 //end
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
