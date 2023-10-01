@@ -82,9 +82,9 @@
                             <label for="example-text-input" class="form-control-label">Select Curicullum</label>
                             <select class="form-control" id="type" name="type">
                               <option value="" selected>Select</option>
-                              <%if(data.length){ for(var i=0;i<data.length;i++){    %>
+                              <%if(curriculim.length){ for(var i=0;i<data.length;i++){    %>
                                 
-                              <option value=<%= data[i].id %>><%= data[i].cname%></option>
+                              <option value=<%= data[i].id %>><%= curriculim[i].name%></option>
                               <%} }%>
                             </select>
                           </div>
