@@ -1,110 +1,170 @@
-<aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-2 " id="sidenav-main">
-    <div class="sidenav-footer">
+
+<aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-2" id="sidenav-main">
+  <div class="sidenav-footer">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" target="_blank">
-        <img src="/img/logo.png" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold"></span>
+          <img src="/img/logo.png" class="navbar-brand-img h-100" alt="main_logo">
+          <span class="ms-1 font-weight-bold"></span>
       </a>
-    </div>
-    <hr class="horizontal dark mt-0">
-    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+  </div>
+  <hr class="horizontal dark mt-0">
+  <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
       <ul class="navbar-nav">
-        
-        <li class="nav-item mt-3    ">
-          <h6 href="/" class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6"></h6>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="/dashboard">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Dashboard</span>
-          </a>
-        </li>
-       
-        <!-- <li class="nav-item">
-            <a class="nav-link " href="/manage">
-              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="ni ni-settings-gear-65 text-primary text-sm opacity-10"></i>
+
+          <li class="nav-item mt-3">
+              <h6 href="/" class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6"></h6>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link active" href="/dashboard">
+                  <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                      <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+                  </div>
+                  <span class="nav-link-text ms-1">Dashboard</span>
+              </a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link" href="#usersSubmenu" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="usersSubmenu" id="usersToggle">
+                  <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                      <i class="ni ni-single-02 text-primary text-sm opacity-10"></i>
+                  </div>
+                  <span class="nav-link-text ms-1">Users</span>
+                  <i class="fas fa-caret-down ms-auto"></i>
+              </a>
+              <div class="collapse" id="usersSubmenu">
+                  <ul class="navbar-nav">
+                      <li class="nav-item">
+                          <a class="nav-link" href="/manage/add-user">
+                              <span class="nav-link-text ms-3">Add Users</span>
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="/manage/manage-users">
+                              <span class="nav-link-text ms-3">Manage Users</span>
+                          </a>
+                      </li>
+                  </ul>
               </div>
-              <span class="nav-link-text ms-1">Manage</span>
-            </a>
-          </li> -->
-        <li class="nav-item nav-link">
-           
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-bold-right  text-primary text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Users</span>
-            <div class="nav-box">
-            <li class="edge-nav">
-              
-              <a href="/manage/add-user" class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">- Add Users</a>
-            </li>
-            <li class="edge-nav">
-              <a href="/manage/manage-users" class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">- Manage Users</a>
-            </li>
-            <!-- <li class="edge-nav">
-              <a href="/manage/trainer-update" class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">- Trainers</a>
-            </li> -->
-      </li>
-      
-        <li class="nav-item nav-link">
-            
-              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="ni ni-bold-right text-primary text-sm opacity-10"></i>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link" href="#institutionSubmenu" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="institutionSubmenu" id="institutionToggle">
+                  <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                      <i class="ni ni-building text-primary text-sm opacity-10"></i>
+                  </div>
+                  <span class="nav-link-text ms-1">Institution</span>
+                  <i class="fas fa-caret-down ms-auto"></i>
+              </a>
+              <div class="collapse" id="institutionSubmenu">
+                  <ul class="navbar-nav">
+                      <li class="nav-item">
+                          <a class="nav-link" href="/manage/add-institution">
+                              <span class="nav-link-text ms-3">Add Institution</span>
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="/manage/manage-institution">
+                              <span class="nav-link-text ms-3">Manage Institution</span>
+                          </a>
+                      </li>
+                  </ul>
               </div>
-              <span class="nav-link-text ms-1">Institution</span>
-              
-              <li class="edge-nav">
-                <a href="/manage/add-institution" class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">- Add Institution</a>
-              </li>
-              <li class="edge-nav">
-                <a href="/manage/manage-institution" class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">- Manage Institution</a>
-              </li>
-           
-        </li>
-        
-        <li class="nav-item nav-link">
-           
-              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="ni ni-bold-right  text-primary text-sm opacity-10"></i>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link" href="#moduleSubmenu" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="moduleSubmenu" id="moduleToggle">
+                  <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                      <i class="ni ni-archive-2 text-primary text-sm opacity-10"></i>
+                  </div>
+                  <span class="nav-link-text ms-1">Module</span>
+                  <i class="fas fa-caret-down ms-auto"></i>
+              </a>
+              <div class="collapse" id="moduleSubmenu">
+                  <ul class="navbar-nav">
+                      <li class="nav-item">
+                          <a class="nav-link" href="/manage/add-curriculum">
+                              <span class="nav-link-text ms-3">Add Curriculum</span>
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="/manage/add-module">
+                              <span class="nav-link-text ms-3">Add Module</span>
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="/manage/module-confirmation-sheet">
+                              <span class="nav-link-text ms-3">Module Confirmation Sheet</span>
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="/trainer/day-work">
+                              <span class="nav-link-text ms-3">DSTS</span>
+                          </a>
+                      </li>
+                  </ul>
               </div>
-              <span class="nav-link-text ms-1">Module</span>
-              <div class="nav-box">
-                <li class="edge-nav">
-                  <a href="/manage/add-curriculum" class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">- Add Curriculum'</a>
-                </li>
-              <li class="edge-nav">
-                <a href="/manage/add-module" class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">- Add Module</a>
-              </li>
-              <!-- <li class="edge-nav">
-                <a href="/" class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">- Manage Module</a>
-              </li> -->
-              <li class="edge-nav">
-                <a href="/manage/module-confirmation-sheet" class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">- Module Confirmation Sheet</a>
-              </li>
-              <li class="edge-nav">
-                <a href="/trainer/day-work" class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">- DSTS</a>
-              </li>
-            </div>
-          
-        </li>
- 
-         
+          </li>
+
       </ul>
-     
-    </div>
-</div>
-    <div class="sidenav-footer mx-3 ">
-        <div class="card card-plain shadow-none" id="sidenavCard"> 
+  </div>
+  <div class="sidenav-footer mt-auto">
+      <div class="card card-plain shadow-none" id="sidenavCard">
           <div class="card-body text-center p-3 w-100 pt-0">
-            
-            <a href="/" target="_blank" class="btn btn-dark btn-sm w-100 mb-3">Sign Out</a>
+              <a href="/" target="_blank" class="btn btn-dark btn-sm w-100 mb-3">Sign Out</a>
           </div>
-          
-        </div>
-      
-     
-    </div>
-  </aside>
+      </div>
+  </div>
+</aside>
+<style>
+
+    /* Custom CSS to adjust the main content area */
+.main-content {
+    margin-left: 260px; /* Adjust the margin to match the width of your sidebar */
+    transition: margin-left 0.3s ease; /* Add a smooth transition for the margin */
+}
+
+/* Style for when the sidebar is hidden */
+.sidebar-hidden .main-content {
+    margin-left: 0; /* Set margin to 0 when the sidebar is hidden */
+}
+
+/* Additional styles for the sidebar */
+#sidenav-main {
+    width: 260px; /* Adjust the width of the sidebar as needed */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1050; /* Ensure the sidebar appears above other elements */
+    background-color: #fff; /* Set your desired background color */
+    /* Add other styles for the sidebar as needed */
+}
+
+</style>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      // Function to toggle the sidebar
+      function toggleSidebar() {
+          const sidenav = document.querySelector("#sidenav-main");
+          sidenav.classList.toggle("show");
+      }
+
+      // Add event listener to the sidebar toggle button
+      document.querySelector("#iconSidenav").addEventListener("click", function () {
+          toggleSidebar();
+      });
+
+      // Add event listeners to toggle submenus
+      document.querySelector("#usersToggle").addEventListener("click", function () {
+          document.querySelector("#usersSubmenu").classList.toggle("show");
+      });
+
+      document.querySelector("#institutionToggle").addEventListener("click", function () {
+          document.querySelector("#institutionSubmenu").classList.toggle("show");
+      });
+
+      document.querySelector("#moduleToggle").addEventListener("click", function () {
+          document.querySelector("#moduleSubmenu").classList.toggle("show");
+      });
+  });
+</script>
