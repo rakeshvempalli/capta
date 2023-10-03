@@ -59,11 +59,11 @@
                             <p class="text-uppercase text-sm">College Details</p>
                             <div class="form-group">
                               <label for="example-text-input" class="form-control-label">Select College</label>
-                              <select class="form-control" id="collegeName" name="collgeName">
+                              <select class="form-control" id="collegeName" name="collegeName">
                                 <option value="" selected>Select</option>
                                 <%if(data.length){ for(var i=0;i<data.length;i++){ %>
 
-                                  <option value=<%=data[i].id %>><%= data[i].cname%>
+                                  <option value=<%=data[i].cname %>><%= data[i].cname%>
                                   </option>
                                   <%} }%>
                               </select>
@@ -289,7 +289,7 @@
                               </div>
                               <div class="form-group">
                                 <label for="totalTrainingDays" class="form-control-label">Total Number of Days of Training</label>
-                                <input class="form-control" type="text" name="totalTrainingDays" check>
+                                <input class="form-control" type="text" name="totalDaysTraining" check>
                               </div>
                               <div class="form-group">
                                 <label for="perDayPerTrainer" class="form-control-label">Per Day Per Trainer</label>

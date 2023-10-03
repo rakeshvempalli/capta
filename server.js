@@ -92,6 +92,7 @@ app.get('/manage/manage-users', (req, res) => {
 			}
 	});
   });
+  
   app.get('/manage/manage-institution', (req, res) => {
 	connection.query('SELECT * FROM institution',(err, rows)=> {
 		if (err) {

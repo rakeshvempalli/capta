@@ -44,7 +44,7 @@
                       <span style="color:rgb(42, 170, 234)"><%= message %></span>
                     </div>
                     <%}%>
-                <form action="/manage/add-curriculum" method="Post" name="addInstitution">
+                <form action="/manage/add-curriculum" method="Post" name="addInstitution" enctype="multipart/form-data">
               
                  
                   <div class="row">
@@ -59,7 +59,7 @@
                           </div>
                           <div class="form-group">
                             <label for="example-text-input" class="form-control-label">Total Days</label>
-                            <input class="form-control" type="text" name="days"  onfocus="focused(this)" onfocusout="defocused(this)" required>
+                            <input class="form-control" type="number" name="days"  onfocus="focused(this)" onfocusout="defocused(this)" required>
                           </div>
                           
                     </div>
