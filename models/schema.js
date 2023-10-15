@@ -126,5 +126,37 @@ const curriculumSchema = new mongoose.Schema({
 
 const Curriculum = mongoose.model('Curriculum', curriculumSchema);
 
-module.exports = { Institution,User,Module,Curriculum};
+const sessionSchema = new mongoose.Schema({
+  session_name: {
+    type: String,
+    required: true,
+  },
+  session_date: {
+    type: Date,
+    required: true,
+  },
+  session_time: {
+    type: String,
+    required: true,
+  },
+  session_location: {
+    type: String,
+    required: true,
+  },
+  session_trainer: {
+    type: String,
+    required: true,
+  },
+});
+
+
+const Session = mongoose.model('Session', sessionSchema);
+
+const collegeSchema = new mongoose.Schema({
+  cname: String,
+  excel: String, // Store the GridFS file ID for the uploaded Excel file
+});
+
+const College = mongoose.model('College', collegeSchema);
+module.exports = { Institution,User,Module,Curriculum,Session,College};
 
