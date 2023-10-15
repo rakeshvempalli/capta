@@ -10,6 +10,7 @@ const { GridFSBucket, ObjectID } = require('mongodb');
 const { Readable } = require('stream');
 const bcrypt = require('bcrypt');
 const xlsx = require('xlsx');
+const mimeTypes = require('mime-types');
 const app = express();
 var dateObj =  new Date();
 var month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -17,12 +18,11 @@ var day = dateObj.getUTCDate();
 var year = dateObj.getUTCFullYear();
 var date = day+"/"+month+"/"+year;
 var router = express.Router()
-const { Institution,User,Module,Curriculum } = require('./models/schema'); 
+const { Institution,User,Module,Curriculum,Session,College } = require('./models/schema'); 
 
 
 //database 
 const port = 3333
-// Set up MongoDB connection
 mongoose.connect('mongodb+srv://jinxforever8341:iZ4rHLYSTCGpLeWg@cluster0.ur01jol.mongodb.net/', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -65,12 +65,10 @@ app.get('/dashboard', (req, res) => {
 
 app.get('/manage/add-module', async (req, res) => {
     try {
-      // Use Mongoose to retrieve data from the MongoDB collection 'institutions'
       const data = await Institution.find();
       const curriculim = await Curriculum.find();
       
   
-      // Render your template with the MongoDB data
       res.render(path.join(__dirname, '/manage/add-module'), { data,curriculim });
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -82,20 +80,15 @@ app.get('/manage/add-curriculum', (req, res) => {
     res.render(path.join(__dirname+'/manage/add-curriculum'));
   });
 
-// Assuming you have the 'Institution' model defined in 'models/Institution.js'
 
 app.get('/manage/module-confirmation-sheet', async (req, res) => {
   try {
-    // Use Mongoose to retrieve data from the MongoDB 'Institution' collection
     const institutions = await Institution.find();
 
-    // Check if a success message exists in the session
     const successMessage = req.session.successMessage;
     
-    // Clear the success message from the session
     delete req.session.successMessage;
 
-    // Render your template with the MongoDB data and the success message
     res.render(path.join(__dirname, '/manage/module-confirmation-sheet'), {
       data: institutions,
       message: successMessage,
@@ -109,10 +102,8 @@ app.get('/manage/module-confirmation-sheet', async (req, res) => {
 // Route handler for /manage/manage-users
 app.get('/manage/manage-users', async (req, res) => {
     try {
-      // Use Mongoose to retrieve all users
       const users = await User.find();
       
-      // Render the 'manage-user' template and pass the retrieved users as data
       res.render(path.join(__dirname, '/manage/manage-user'), { data: users });
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -123,10 +114,8 @@ app.get('/manage/manage-users', async (req, res) => {
   // Route handler for /manage/manage-institution
   app.get('/manage/manage-institution', async (req, res) => {
     try {
-      // Use Mongoose to retrieve all institutions
       const institutions = await Institution.find();
   
-      // Render the 'manage-institution' template and pass the retrieved institutions as data
       res.render(path.join(__dirname, '/manage/manage-institution'), { data: institutions });
     } catch (error) {
       console.error('Error fetching institutions:', error);
@@ -136,7 +125,6 @@ app.get('/manage/manage-users', async (req, res) => {
 
 app.get('/manage', async (req, res) => {
     try {
-      // Count the number of users with role 1 in the MongoDB collection
       const user = await User.countDocuments({ role: "1" });
       const institution=await Institution.countDocuments({});
       const module = await Module.countDocuments({});
@@ -159,6 +147,45 @@ app.get('/manage/add-institution', (req, res) => {
 app.get('/trainer/day-work', (req, res) => {
     res.render(path.join(__dirname+'/trainer/day-work'));
     
+  });
+
+app.get('/manage/session-management', (req, res) => {
+    res.render(path.join(__dirname+'/manage/session-management'));
+    
+  });
+
+app.get('/manage/add-college-data', (req, res) => {
+    res.render(path.join(__dirname+'/manage/add-college-data'));
+    
+  });
+
+app.get('/manage/session-display', async (req, res) => {
+    try {
+      const sessions = await Session.find(); 
+      const successMessage = req.session.successMessage;
+    
+      delete req.session.successMessage;
+
+      res.render(path.join(__dirname + '/manage/session-display'), { sessions , message: successMessage,});
+    } catch (error) {
+      console.error('Error fetching sessions:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+  app.get('/edit-session/:id', (req, res) => {
+    const sessionId = req.params.id;
+    console.log(sessionId);
+    Session.findById(sessionId)
+      .then(session => {
+        if (!session) {
+          return res.status(404).json({ error: 'Session not found' });
+        }
+        res.render(path.join(__dirname + '/manage/edit-session'), { session });
+      })
+      .catch(error => {
+        res.status(500).json({ error: 'Error finding session' });
+      });
   });
 
 //------------------------post methods
@@ -200,20 +227,16 @@ app.post('/login', async (req, res) => {
 
 app.post('/manage/add-user', async (req, res) => {
   try {
-    // Check if any files were uploaded
     if (!req.files || Object.keys(req.files).length === 0) {
       console.log(req.files,req.body);
       return res.status(400).send('No files were uploaded.');
     }
 
-    // Parse form data and file uploads
     const { username, email, phone, addr, city, country, pincode, bname, bcode, anumber, ifsc, role, salary, type } = req.body;
 
-    // Handle file uploads
     const { resume, adhar, pan, photo } = req.files;
-    console.log('Uploaded files:', req.files); // Log the uploaded files
+    console.log('Uploaded files:', req.files); 
 
-      // Create a new user record and save it to MongoDB using mongoose
     const user = new User({
       username,
       email,
@@ -236,22 +259,19 @@ app.post('/manage/add-user', async (req, res) => {
       await user.save();
     }
 
-    // Save the user data to MongoDB
     await user.save();
 
-    // Now, handle file uploads and store them using GridFS
     const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
-      bucketName: 'uploads', // Specify your GridFS bucket name
+      bucketName: 'uploads', 
     });
 
     const uploadFileToGridFS = async (fileInfo) => {
       return new Promise((resolve, reject) => {
         const { name, data } = fileInfo;
     
-        // Create a readable stream from the buffer
         const fileStream = new Readable();
         fileStream.push(data);
-        fileStream.push(null); // Signal the end of the stream
+        fileStream.push(null); 
     
         const uploadStream = bucket.openUploadStream(name);
         fileStream.pipe(uploadStream)
@@ -261,7 +281,6 @@ app.post('/manage/add-user', async (req, res) => {
           });
       });
     };
-    // Upload files and get their ObjectIDs
     const [resumeID, adharID, panID, photoID] = await Promise.all([
       uploadFileToGridFS(resume),
       uploadFileToGridFS(adhar),
@@ -269,13 +288,11 @@ app.post('/manage/add-user', async (req, res) => {
       uploadFileToGridFS(photo),
     ]);
 
-    // Update the user record with GridFS ObjectIDs
     user.resume = resumeID;
     user.adhar = adharID;
     user.pan = panID;
     user.photo = photoID;
     
-    // Save the user data again to include GridFS ObjectIDs
     await user.save();
 
     res.render(path.join(__dirname + '/manage/add-user'), {
@@ -289,7 +306,6 @@ app.post('/manage/add-user', async (req, res) => {
 
 app.post('/manage/add-institution', async (req, res) => {
   try {
-    // Create a new instance of the Institution model with data from the request body
     const institutionData = new Institution({
       cname: req.body['cname'],
       eamcet: req.body['eamcet'],
@@ -306,10 +322,8 @@ app.post('/manage/add-institution', async (req, res) => {
       tphone: req.body['tphone'],
     });
 
-    // Save the institution data to MongoDB
     const savedInstitution = await institutionData.save();
 
-    // Render a success message
     res.render(path.join(__dirname, '/manage/add-institution'), { message: 'Added Successfully' });
   } catch (error) {
     console.error('Error adding institution:', error);
@@ -326,10 +340,8 @@ app.post('/manage/module-confirmation-sheet', async (req, res) => {
 
     await newModule.save(); 
 
-    // Store the success message in the session
     req.session.successMessage = 'Added Successfully';
 
-    // Redirect to the GET route
     res.redirect('/manage/module-confirmation-sheet');
   } catch (error) {
     console.error('Error inserting data:', error);
@@ -340,24 +352,20 @@ app.post('/manage/module-confirmation-sheet', async (req, res) => {
 
 app.post('/manage/add-curriculum', async (req, res) => {
   try {
-    // Check if an Excel file was uploaded
     if (!req.files || !req.files.excel) {
       return res.status(400).send('No Excel file was uploaded.');
     }
 
-    // Parse form data
     const { cname, hours, days } = req.body;
 
-    // Handle the Excel file upload
-    const { excel } = req.files; // Access the file using the correct field name "excel"
-    const excelMimeType = mime.lookup(excel.name);
+    const { excel } = req.files; 
+    const excelMimeType = mimeTypes.lookup(excel.name);
     if (
       excelMimeType !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' &&
       excelMimeType !== 'application/vnd.ms-excel'
     ) {
       return res.status(400).send('Uploaded file is not an Excel file.');
     }
-    // Store the Excel file in MongoDB using GridFS
     const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
       bucketName: 'uploads', 
     });
@@ -366,10 +374,9 @@ app.post('/manage/add-curriculum', async (req, res) => {
       return new Promise((resolve, reject) => {
         const { name, data } = fileInfo;
 
-        // Create a readable stream from the buffer
         const fileStream = new Readable();
         fileStream.push(data);
-        fileStream.push(null); // Signal the end of the stream
+        fileStream.push(null);
 
         const uploadStream = bucket.openUploadStream(name);
         fileStream.pipe(uploadStream)
@@ -380,15 +387,13 @@ app.post('/manage/add-curriculum', async (req, res) => {
       });
     };
 
-    // Upload the Excel file and get its ObjectID
     const excelID = await uploadExcelToGridFS(excel);
 
-    // Create a new curriculum record and save it to MongoDB
     const curriculum = new Curriculum({
       name: cname,
       totalHours: hours,
       totalDays: days,
-      excel: excelID, // Store the GridFS file ID for the uploaded Excel file
+      excel: excelID, 
     });
 
     await curriculum.save();
@@ -401,6 +406,153 @@ app.post('/manage/add-curriculum', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+app.post('/manage/add-college-data', async (req, res) => {
+  try {
+    if (!req.files || !req.files.excel) {
+      return res.status(400).send('No Excel file was uploaded.');
+    }
+
+    const excelFile = req.files.excel;
+
+    const workbook = xlsx.read(excelFile.data);
+
+    const sheetName = workbook.SheetNames[0];
+    const sheet = workbook.Sheets[sheetName];
+
+    const jsonData = xlsx.utils.sheet_to_json(sheet);
+    console.log(jsonData);
+    const result = await College.insertMany(jsonData);
+
+    console.log('Data inserted into MongoDB:', result.length, 'records');
+    res.send('Excel file uploaded, and data inserted into MongoDB.');
+  } catch (err) {
+    console.error('Error inserting data into MongoDB:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+// app.post('/manage/add-college-data', async (req, res) => {
+//   try {
+//     if (!req.files || !req.files.excel) {
+//       return res.status(400).send('No Excel file was uploaded.');
+//     }
+
+//     const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+//       bucketName: 'uploads',
+//     });
+//     const {name} = req.body;
+//     const { excel } = req.files;
+//     const excelMimeType = mimeTypes.lookup(excel.name);
+
+
+//     if (
+//       excelMimeType !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' &&
+//       excelMimeType !== 'application/vnd.ms-excel'
+//     ) {
+//       return res.status(400).send('Uploaded file is not an Excel file.');
+//     }
+
+//     const uploadExcelToGridFS = async (fileInfo) => {
+//       return new Promise((resolve, reject) => {
+//         const { name, data } = fileInfo;
+
+//         const fileStream = new Readable();
+//         fileStream.push(data);
+//         fileStream.push(null);
+
+//         const uploadStream = bucket.openUploadStream(name);
+//         fileStream.pipe(uploadStream)
+//           .on('error', reject)
+//           .on('finish', () => {
+//             resolve(uploadStream.id);
+//           });
+//       });
+//     };
+
+//     const excelID = await uploadExcelToGridFS(excel);
+//     const college = new College({
+//       cname: name,
+//       excel: excelID, 
+//     });
+
+//     await college.save();
+
+//     res.render(path.join(__dirname + '/manage/add-college-data'), {
+//       message: 'Excel file uploaded successfully',
+//     });
+//   } catch (error) {
+//     console.error('Error uploading Excel file:', error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// });
+
+app.post('/manage/session-management', async (req, res) => {
+  try {
+    const { session_name, session_date, session_time, session_location, session_trainer } = req.body;
+
+    const newSession = new Session({
+      session_name,
+      session_date,
+      session_time,
+      session_location,
+      session_trainer,
+    });
+
+    await newSession.save();
+    res.render(path.join(__dirname + '/manage/session-management'), {
+      message: 'Session Added Successfully',
+    });
+  } catch (error) {
+    console.error('Error adding session:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.post('/update-session/:id', async (req, res) => {
+  try {
+    const sessionId = req.params.id;
+    const session = await Session.findById(sessionId);
+
+    if (!session) {
+      return res.status(404).json({ message: 'Session not found' });
+    }
+    for (const key in req.body) {
+      if (session[key] !== undefined) {
+        session[key] = req.body[key];
+      }
+    }
+    await session.save();
+
+    req.session.successMessage = 'updated Successfully';
+
+    res.redirect('/manage/session-display');
+    } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+//------------------------delete methods
+
+app.delete('/delete-session/:id', (req, res) => {
+  const sessionId = req.params.id; 
+
+  Session.findByIdAndRemove(sessionId)
+    .then(deletedSession => {
+      if (!deletedSession) {
+        return res.status(404).json({ error: 'Session not found' });
+      }
+      res.json({ message: 'Session deleted successfully' });
+    })
+    .catch(error => {
+      res.status(500).json({ error: 'Error deleting session' });
+    });
+});
+
+
+
 
 
 //end
